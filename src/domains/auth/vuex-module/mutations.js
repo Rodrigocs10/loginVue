@@ -1,7 +1,4 @@
-import { updateField } from "vuex-map-fields";
-
 export default {
-  updateField,
   /* Quando é detectado que o usuário não tem permissão para acessar alguma funcionalidade de app
     * o token á settado para null.
     */

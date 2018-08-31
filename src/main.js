@@ -28,87 +28,11 @@ Vue.use(Vuetify);
 Vue.use(VeeValidate);
 
 const store = new Vuex.Store(globalStore);
-
 sync(store, router);
 
-const PaginasPerfis = new Map();
-PaginasPerfis.set("CONDOMINO", [
-  "/",
-  "/login",
-  "/dashboard",
-  "/ultimasVotacoes"
-]);
-PaginasPerfis.set("ADMIN", [
-  "/",
-  "/login",
-  "/dashboard",
-  "/usuarios",
-  "/perfis",
-  "/novoUsuario",
-  "/editarUsuario"
-]);
-
-const openPaths = ["/login"];
-
-const checarPermissoes = to => {
-  for (let x = 0; x <= store.state.user.perfis.length; x++) {
-    if (
-      PaginasPerfis.get(store.state.user.perfis[x]) &&
-      PaginasPerfis.get(store.state.user.perfis[x]).includes(to.path)
-    ) {
-      return true;
-    }
-  }
-  return false;
-};
-
-//TODO: ver forma melhor de fazer isto aqui
-const checkarLocalStorage = () => {
-  localforage.getItem("token").then(res => {
-    if (res === null) {
-      router.push("login");
-    }
-  });
-
-  return true;
-};
-
-const checkToken = (to, from, next) => {
-  if (
-    (store.state.token != null &&
-      checarPermissoes(to) &&
-      checkarLocalStorage()) ||
-    openPaths.includes(to.path)
-  ) {
-    next();
-  } else {
-    next("/login");
-  }
-};
-
-router.beforeEach((to, from, next) => {
-  checkToken(to, from, next);
-});
-
 Vue.use(FlagIcon);
-
 Vue.config.productionTip = false;
-
 axios.defaults.baseURL = "http://localhost:8080/";
-
-const resInterceptor = axios.interceptors.response.use(
-  res => {
-    return res;
-  },
-  error => {
-    if (error.response.status == HTTPStatus.FORBIDDEN) {
-      localforage.setItem("token", null);
-      router.push("login");
-    }
-    // cancela o tratamento de erro e passa direto
-    return Promise.reject(error);
-  }
-);
 
 /* eslint-disable no-new */
 new Vue({

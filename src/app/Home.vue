@@ -16,9 +16,9 @@
 </template>
 
 <script>
-  import Breadcrumbs from 'Support/componentes/partials/Breadcrumbs'
-  import Header from 'Support/componentes/partials/Header'
-  import Footer from 'Support/componentes/partials/Footer'
+  import Breadcrumbs from '../support/componentes/partials/Breadcrumbs'
+  import Header from '../support/componentes/partials/Header'
+  import Footer from '../support/componentes/partials/Footer'
 
   export default {
     name: 'Dashboard',

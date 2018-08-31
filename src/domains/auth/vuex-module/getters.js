@@ -1,7 +1,4 @@
-import { getField } from "vuex-map-fields";
-
 export default {
-  getField,
   isAuthenticated(state) {
     return state.token !== null;
   },
